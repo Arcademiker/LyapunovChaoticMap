@@ -9,12 +9,14 @@ using namespace cv;
 
 //Algorithm explained at: https://en.wikipedia.org/wiki/Lyapunov_fractal
 double lyapunov(double a, double b, double x0, int N) {
-	double ab[2] = { a, b };
+    int abSize = 2;
+	//double ab[abSize] = { b, a, a, b, a, b, b, a, a, b, b, a, b, a, a, b};
+    double ab[abSize] = { b, a};
 	double xn = b*x0*(1 - x0);
 	double sum = 0;
 	for (int i = 1; i < N; i++) {
-		xn = ab[i % 2] * xn*(1 - xn);
-		sum += log(fabs(b*(1 - 2 * xn)));
+		xn = ab[i % abSize] * xn*(1 - xn);
+		sum += log2(fabs(ab[i % abSize]*(1 - 2 * xn)));
 	}
 	return sum / (double)N;
 }
